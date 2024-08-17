@@ -185,34 +185,34 @@ export default function App() {
               hideArrows={true}
               hideDayNames={false} // Show day names
               renderHeader={() => null} // Hide the default header to prevent duplication
-              dayComponent={({ date, state }) => (
-                <View
-                  style={{
-                    justifyContent: "center",
-                    alignItems: "center",
-                    width: 36,
-                    height: 36,
-                    borderRadius: 18,
-                    backgroundColor:
-                      markedDates[date.dateString] &&
-                      markedDates[date.dateString].customStyles.container
-                        .backgroundColor,
-                  }}
-                >
-                  <Text
+              dayComponent={({ date, state }) => {
+                if (state === "disabled") {
+                  return <View style={{ width: 36, height: 36 }} />;
+                }
+                return (
+                  <View
                     style={{
-                      color:
-                        state === "today"
-                          ? "#1E90FF"
-                          : state === "disabled"
-                          ? "#A9A9A9"
-                          : "#FFFFFF",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      width: 36,
+                      height: 36,
+                      borderRadius: 18,
+                      backgroundColor:
+                        markedDates[date.dateString] &&
+                        markedDates[date.dateString].customStyles.container
+                          .backgroundColor,
                     }}
                   >
-                    {date.day}
-                  </Text>
-                </View>
-              )}
+                    <Text
+                      style={{
+                        color: state === "today" ? "#1E90FF" : "#FFFFFF",
+                      }}
+                    >
+                      {date.day}
+                    </Text>
+                  </View>
+                );
+              }}
             />
           </View>
         ))}

@@ -2,6 +2,8 @@
 
 This project is a React Native application designed to visualize your LeetCode submissions on a calendar. It highlights the days you made submissions, tracks your streaks, and displays rest days, giving you a clear view of your coding activity over time.
 
+![LeetCode Tracker Screenshot](assets/screenshot.png)
+
 ## Features
 
 - **Calendar View**: Displays a calendar with highlighted days where LeetCode submissions were made.
@@ -82,3 +84,4 @@ Acknowledgements
 React Native Calendars for the calendar component.
 Expo for providing an easy-to-use development platform for React Native.
 LeetCode API by Faisal Shohag for the submission data API.
+Hevy to serve as inspiration for the calendar design.

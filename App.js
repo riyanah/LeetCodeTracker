@@ -31,11 +31,14 @@ export default function App() {
 
   const markSubmissionDates = (submissionCalendar) => {
     let dates = {};
+    const today = moment().format("YYYY-MM-DD");
+
     if (submissionCalendar) {
       Object.keys(submissionCalendar).forEach((timestamp) => {
         const submissionDate = new Date(timestamp * 1000)
           .toISOString()
           .split("T")[0];
+
         dates[submissionDate] = {
           customStyles: {
             container: {
@@ -53,6 +56,28 @@ export default function App() {
           },
         };
       });
+
+      // Ensure today's date is only highlighted if it has a submission
+      if (!dates[today]) {
+        dates[today] = {
+          customStyles: {
+            container: {
+              borderRadius: 50,
+              width: 36,
+              height: 36,
+              justifyContent: "center",
+              alignItems: "center",
+              borderColor: "#1E90FF",
+              borderWidth: 1, // Border for today's date without submission
+            },
+            text: {
+              color: "#1E90FF",
+              fontWeight: "bold",
+            },
+          },
+        };
+      }
+
       setMarkedDates(dates);
     } else {
       console.error("No submissionCalendar data found");
@@ -171,21 +196,16 @@ export default function App() {
                     height: 36,
                     borderRadius: 18,
                     backgroundColor:
-                      state === "today"
-                        ? "#1E90FF"
-                        : state === "disabled"
-                        ? "transparent"
-                        : markedDates[date.dateString]
-                        ? markedDates[date.dateString].customStyles.container
-                            .backgroundColor
-                        : "transparent",
+                      markedDates[date.dateString] &&
+                      markedDates[date.dateString].customStyles.container
+                        .backgroundColor,
                   }}
                 >
                   <Text
                     style={{
                       color:
                         state === "today"
-                          ? "#FFFFFF"
+                          ? "#1E90FF"
                           : state === "disabled"
                           ? "#A9A9A9"
                           : "#FFFFFF",

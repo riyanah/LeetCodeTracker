@@ -126,46 +126,78 @@ export default function App() {
           <Text style={styles.headerText}>{restDays} days Rest</Text>
         </View>
       </View>
+
       <ScrollView
         style={styles.calendarContainer}
         contentContainerStyle={{ paddingBottom: 30 }}
       >
-        {months.map((month) => (
-          <Calendar
-            key={month}
-            current={month}
-            markedDates={markedDates}
-            markingType={"custom"}
-            theme={{
-              backgroundColor: "#000000",
-              calendarBackground: "#000000",
-              textSectionTitleColor: "#A9A9A9",
-              selectedDayBackgroundColor: "#FF4500",
-              selectedDayTextColor: "#FFFFFF",
-              todayTextColor: "#FFD700", // Gold color for today
-              todayBackgroundColor: "#FF4500", // Background color for today
-              dayTextColor: "#FFFFFF",
-              textDisabledColor: "#4F4F4F",
-              monthTextColor: "#FFFFFF",
-              indicatorColor: "#FFFFFF",
-              textDayFontWeight: "bold", // Make day font bold
-              textMonthFontWeight: "bold",
-              textDayHeaderFontWeight: "bold",
-              textDayFontSize: 16,
-              textMonthFontSize: 18,
-              textDayHeaderFontSize: 16,
-              arrowColor: "white",
-            }}
-            renderArrow={(direction) => (
-              <Ionicons
-                name={direction === "left" ? "chevron-back" : "chevron-forward"}
-                size={24}
-                color="#FFFFFF"
-              />
-            )}
-            hideArrows={true}
-            hideDayNames={false} // Show day names
-          />
+        {months.map((month, index) => (
+          <View key={index} style={styles.calendarWrapper}>
+            <Text style={styles.calendarHeaderText}>
+              {moment(month).format("MMMM YYYY")}
+            </Text>
+            <Calendar
+              current={month}
+              markedDates={markedDates}
+              markingType={"custom"}
+              theme={{
+                backgroundColor: "#000000",
+                calendarBackground: "#000000",
+                textSectionTitleColor: "#A9A9A9",
+                selectedDayBackgroundColor: "#1E90FF", // Blue color for today
+                selectedDayTextColor: "#FFFFFF", // White text for today
+                todayTextColor: "#1E90FF", // Blue text for today
+                todayBackgroundColor: "transparent", // No background for today if no submissions
+                dayTextColor: "#FFFFFF",
+                textDisabledColor: "#4F4F4F",
+                monthTextColor: "#FFFFFF",
+                indicatorColor: "#FFFFFF",
+                textDayFontWeight: "bold", // Make day font bold
+                textMonthFontWeight: "bold",
+                textDayHeaderFontWeight: "bold",
+                textDayFontSize: 16,
+                textMonthFontSize: 18,
+                textDayHeaderFontSize: 14,
+              }}
+              hideArrows={true}
+              hideDayNames={false} // Show day names
+              renderHeader={() => null} // Hide the default header to prevent duplication
+              dayComponent={({ date, state }) => (
+                <View
+                  style={{
+                    justifyContent: "center",
+                    alignItems: "center",
+                    width: 36,
+                    height: 36,
+                    borderRadius: 18,
+                    backgroundColor:
+                      state === "today"
+                        ? "#1E90FF"
+                        : state === "disabled"
+                        ? "transparent"
+                        : markedDates[date.dateString]
+                        ? markedDates[date.dateString].customStyles.container
+                            .backgroundColor
+                        : "transparent",
+                  }}
+                >
+                  <Text
+                    style={{
+                      color:
+                        state === "today"
+                          ? "#FFFFFF"
+                          : state === "disabled"
+                          ? "#A9A9A9"
+                          : "#FFFFFF",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {date.day}
+                  </Text>
+                </View>
+              )}
+            />
+          </View>
         ))}
       </ScrollView>
       <StatusBar style="light" />
@@ -181,10 +213,11 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
     justifyContent: "space-around",
-    padding: 16,
-    paddingTop: 40, // Add padding to move the header down
-    backgroundColor: "#2C2C2E", // Background color for header section (matching screenshot)
-    borderRadius: 10, // Rounded corners to match the screenshot
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    backgroundColor: "#000000", // Set the top bar background to black
+    borderBottomWidth: 1,
+    borderBottomColor: "#333", // Subtle border to separate from the calendar
   },
   headerItem: {
     flexDirection: "row",
@@ -196,8 +229,18 @@ const styles = StyleSheet.create({
   headerText: {
     color: "#FFFFFF",
     marginLeft: 8,
-    fontSize: 16,
+    fontSize: 14, // Slightly decrease the font size
     fontWeight: "bold", // Make the text bold like in the screenshot
+  },
+  calendarWrapper: {
+    marginBottom: 20,
+  },
+  calendarHeaderText: {
+    color: "#FFFFFF",
+    fontSize: 18,
+    fontWeight: "bold",
+    textAlign: "center",
+    paddingVertical: 10,
   },
   calendarContainer: {
     flex: 1,

@@ -51,7 +51,6 @@ export default function App() {
             },
             text: {
               color: "white", // Text color on the marked date
-              fontWeight: "bold",
             },
           },
         };
@@ -72,7 +71,6 @@ export default function App() {
             },
             text: {
               color: "#1E90FF",
-              fontWeight: "bold",
             },
           },
         };
@@ -177,9 +175,9 @@ export default function App() {
                 textDisabledColor: "#4F4F4F",
                 monthTextColor: "#FFFFFF",
                 indicatorColor: "#FFFFFF",
-                textDayFontWeight: "bold", // Make day font bold
-                textMonthFontWeight: "bold",
-                textDayHeaderFontWeight: "bold",
+                textDayFontWeight: "normal", // Remove bold from day text
+                textMonthFontWeight: "normal", // Remove bold from month text
+                textDayHeaderFontWeight: "normal", // Remove bold from day headers
                 textDayFontSize: 16,
                 textMonthFontSize: 18,
                 textDayHeaderFontSize: 14,
@@ -209,7 +207,6 @@ export default function App() {
                           : state === "disabled"
                           ? "#A9A9A9"
                           : "#FFFFFF",
-                      fontWeight: "bold",
                     }}
                   >
                     {date.day}
@@ -250,7 +247,6 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     marginLeft: 8,
     fontSize: 14, // Slightly decrease the font size
-    fontWeight: "bold", // Make the text bold like in the screenshot
   },
   calendarWrapper: {
     marginBottom: 20,
@@ -258,7 +254,6 @@ const styles = StyleSheet.create({
   calendarHeaderText: {
     color: "#FFFFFF",
     fontSize: 18,
-    fontWeight: "bold",
     textAlign: "center",
     paddingVertical: 10,
   },

@@ -4,6 +4,9 @@ import { Calendar } from "react-native-calendars";
 import { StatusBar } from "expo-status-bar";
 import { Ionicons } from "@expo/vector-icons";
 import moment from "moment";
+import Constants from "expo-constants";
+
+const username = Constants.expoConfig.extra.LEETCODE_USERNAME;
 
 export default function App() {
   const [markedDates, setMarkedDates] = useState({});
@@ -19,7 +22,7 @@ export default function App() {
   const fetchLeetCodeData = async () => {
     try {
       const response = await fetch(
-        "https://leetcode-api-faisalshohag.vercel.app/riyanahmed"
+        `https://leetcode-api-faisalshohag.vercel.app/${username}`
       );
       const data = await response.json();
       markSubmissionDates(data.submissionCalendar);

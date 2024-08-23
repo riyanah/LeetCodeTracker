@@ -6,7 +6,8 @@ import { Ionicons } from "@expo/vector-icons";
 import moment from "moment";
 import Constants from "expo-constants";
 
-const username = Constants.expoConfig.extra.LEETCODE_USERNAME;
+//const username = Constants.expoConfig.extra.LEETCODE_USERNAME;
+const username = "riyanahmed";
 
 export default function App() {
   const [markedDates, setMarkedDates] = useState({});
